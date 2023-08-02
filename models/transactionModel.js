@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+// transaction model
 const transactionSchema = new Schema({
     title: { type: String, required: true },
     type: { type: String, required: true},
