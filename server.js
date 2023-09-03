@@ -32,10 +32,12 @@ const mongodb = process.env.MONGO_URI;
 main().catch((err) => console.log(err));
 async function main() {
     await mongoose.connect(mongodb).then (() => {
-        app.listen(port, () => {
-            console.log(`connected to DB & listening on port ${port}`);
-        });
+        if(port){
+            app.listen(port, () => {
+                console.log(`connected to DB & listening on port ${port}`);
+            });
+        }
     });
 }
 
-
+module.exports = app;
