@@ -4,12 +4,24 @@ const jwt = require("jsonwebtoken");
 
 //function to generate Tokens for signup and login
 const createToken = (id) => {
-    return jwt.sign({_id: id}, process.env.SECRET, { expiresIn: '3d'});
-}
+    return jwt.sign({ _id: id }, process.env.SECRET, { expiresIn: "3d" });
+};
 
 //login user
 const login_user = asyncHandler(async (req, res) => {
-    res.json({ mssg: "login user" });
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.login(email, password);
+
+        //create token for the user
+        const token = createToken(user._id);
+
+        //sends the token back to the server
+        res.status(200).json({ email, token });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
 });
 
 //signup user
@@ -20,12 +32,12 @@ const signup_user = asyncHandler(async (req, res) => {
         const user = await User.signup(email, password);
 
         //create token for the user
-        const token = createToken(user._id)
+        const token = createToken(user._id);
 
         //sends the token back to the server
-        res.status(200).json({email, token});
-    } catch(err){
-        res.status(400).json({error: err.message});
+        res.status(200).json({ email, token });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
     }
 });
 
