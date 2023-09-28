@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 
 //controller
 const {
@@ -9,6 +8,12 @@ const {
     delete_transaction,
     update_transaction,
 } = require("../controllers/transactionController");
+
+//middleware
+const requireAuth = require("../middleware/requireAuth");
+
+const router = express.Router();
+router.use(requireAuth); //fires authentication middleware before any of the functions below
 
 // GET all transactions
 router.get("/", get_transactions);
