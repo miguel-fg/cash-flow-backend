@@ -4,7 +4,10 @@ const mongoose = require("mongoose");
 
 // GET all transactions
 const get_transactions = asyncHandler(async (req, res, next) => {
-    const transactions = await Transaction.find()
+    const user_id = req.user;
+
+    // only find transactions registered by the user
+    const transactions = await Transaction.find({ user_id })
         .sort({ createdAt: -1 })
         .exec();
 
@@ -29,9 +32,11 @@ const get_single_transaction = asyncHandler(async (req, res, next) => {
 
 // CREATE new transaction
 const create_transaction = asyncHandler(async (req, res, next) => {
+    const user_id = req.user; //user_id is attached by the requireAuth middleware
     const { title, type, amount, category } = req.body;
 
     const transaction = await Transaction.create({
+        user_id,
         title,
         type,
         amount,
