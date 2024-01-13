@@ -14,6 +14,9 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    budget: {
+        type: Number,
+    }
 });
 
 // static signup method
