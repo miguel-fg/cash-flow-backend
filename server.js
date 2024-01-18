@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const transactionRoutes = require("./routes/transactions");
 const userRoutes = require("./routes/user");
+const budgetRoutes = require("./routes/budget");
 
 // express app
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.json());
 //routes
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/budget", budgetRoutes);
 
 //connect to DB
 mongoose.set("strictQuery", false);
